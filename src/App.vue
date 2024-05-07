@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import Header from './components/layout/Header/Header.vue'
+import Layout from "@/components/layout/Layout.vue";
 </script>
 
 <template>
-  <Header />
-  <HelloWorld msg="Hello Vue 3 + Vite + TypeScript + ESLint + Prettier"/>
+  <Layout>
+    <router-view />
+  </Layout>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
