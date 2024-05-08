@@ -3,14 +3,17 @@ import Button from "../ui/button/Button.vue";
 </script>
 <template>
   <div
-    class="relative flex md:flex-row flex-col bg-primary-foreground p-8 w-full rounded-md shadow-primary shadow-lg items-center justify-start"
+    class="relative flex lg:flex-row flex-col bg-primary-foreground px-8 py-4 lg:py-0 w-full rounded-md shadow-primary shadow-lg items-center justify-center"
   >
-    <div class="w-full">
-      <img src="@/assets/images/banner_image.png" class="object-cover" />
-    </div>
-    <div class="flex flex-col w-full gap-12">
-      <h1 class="md:text-7xl text-4xl">Technology for your convenience</h1>
-      <h3 class="text-xl md: text-4xl">
+    <img src="@/assets/images/banner_image.png" />
+
+    <div class="flex flex-col w-full gap-12 lg:px-16">
+      <h1 class="text-center lg:text-left lg:text-7xl text-4xl">
+        Technology for your convenience
+      </h1>
+      <h3
+        class="text-xl text-center text-muted-foreground lg:text-left lg:text-3xl"
+      >
         For your job, study or housework, everything you need is here
       </h3>
       <Button>Shop now</Button>
