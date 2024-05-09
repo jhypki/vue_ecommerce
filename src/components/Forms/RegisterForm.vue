@@ -5,8 +5,9 @@ import * as z from "zod";
 import { ref } from "vue";
 import { supabase } from "@/lib/utils/supabase";
 import { useRouter } from "vue-router";
-import { setUser } from "@/stores/userStore";
-
+import { useUserStore } from "@/stores/userStore";
+const { setUser } = useUserStore();
+const router = useRouter();
 import {
   FormControl,
   FormField,
@@ -31,18 +32,28 @@ const form = useForm({
 const loading = ref(false);
 
 const onSubmit = form.handleSubmit(async (values) => {
+  if (values.password !== values.confirmPassword) {
+    alert("Passwords do not match");
+    return;
+  }
   loading.value = true;
   try {
     let { data, error } = await supabase.auth.signUp({
       email: values.email,
       password: values.password,
     });
+
     if (error) {
       throw error;
     }
     if (data) {
       setUser(data.user);
       router.push("/");
+      const { databaseError } = await supabase.from("users").insert({
+        email: values.email,
+        username: values.username,
+        user_id: data.user.id,
+      });
     }
   } catch (error) {
     console.log(error);

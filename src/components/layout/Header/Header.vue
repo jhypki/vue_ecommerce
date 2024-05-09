@@ -4,11 +4,12 @@ import ToggleThemeButton from "./ToggleThemeButton.vue";
 import Branding from "./Branding.vue";
 import { RouterLink } from "vue-router";
 import { supabase } from "@/lib/utils/supabase";
-import { user, clearUser } from "@/stores/userStore";
+import { useUserStore } from "@/stores/userStore";
 
+const userStore = useUserStore();
 const handleLogout = async () => {
   await supabase.auth.signOut();
-  clearUser();
+  userStore.clearUser();
 };
 </script>
 
@@ -20,7 +21,7 @@ const handleLogout = async () => {
       <Branding />
     </RouterLink>
     <div class="flex items-center gap-4">
-      <div v-if="!user" class="flex gap-4">
+      <div v-if="!userStore.user" class="flex gap-4">
         <RouterLink to="/login">
           <Button variant="outline">Sign in</Button>
         </RouterLink>
@@ -29,7 +30,7 @@ const handleLogout = async () => {
         </RouterLink>
       </div>
       <div v-else class="flex gap-4 items-center">
-        <span class="sm:block hidden">{{ user.email }}</span>
+        <span class="sm:block hidden">{{ userStore.user.email }}</span>
         <Button @click="handleLogout">Logout</Button>
       </div>
       <ToggleThemeButton />

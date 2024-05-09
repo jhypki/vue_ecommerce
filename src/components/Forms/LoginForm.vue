@@ -5,8 +5,8 @@ import * as z from "zod";
 import { ref } from "vue";
 import { supabase } from "@/lib/utils/supabase";
 import { useRouter } from "vue-router";
-import { setUser } from "@/stores/userStore";
-
+import { useUserStore } from "@/stores/userStore";
+const { setUser } = useUserStore();
 import {
   FormControl,
   FormField,
