@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/card";
 
 import { Button } from "@/components/ui/button";
+import { useCartStore } from "@/stores/cartStore";
+const cartStore = useCartStore();
 defineProps(["product"]);
 </script>
 <template>
@@ -30,7 +32,17 @@ defineProps(["product"]);
         </CardDescription>
       </CardContent>
       <CardFooter class="flex justify-between">
-        <Button class="btn btn-primary">Add to cart</Button>
+        <Button
+          @click="
+            (e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              cartStore.addToCart(product);
+            }
+          "
+          class="btn btn-primary"
+          >Add to cart</Button
+        >
         <p>${{ product.price }}</p>
       </CardFooter>
     </Card>

@@ -24,7 +24,7 @@ watchEffect(() => {
   <div v-if="loading">Loading...</div>
   <div
     v-if="product"
-    class="w-full max-w-4xl m-auto flex md:flex-row flex-col justify-between gap-8 border-b-2 border-r-2 border-primary p-6"
+    class="w-full max-w-4xl m-auto flex md:flex-row flex-col gap-8"
   >
     <div class="flex flex-col gap-4 items-center">
       <img
@@ -52,7 +52,7 @@ watchEffect(() => {
         </h1>
         <p class="text-primary">${{ product.price }}</p>
         <p class="text-muted-foreground">{{ product.description }}</p>
-        <p>Quantity {{ product.quantity }}</p>
+        <p>Quantity: {{ product.stock_quantity }}</p>
       </div>
       <Button class="btn btn-primary md:max-w-64">Add to cart</Button>
     </div>

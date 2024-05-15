@@ -4,6 +4,7 @@ export const useProductsStore = defineStore({
     id: "products",
     state: () => ({
         products: [] as object[],
+        productsCount: 0,
     }),
     actions: {
         setProducts(products: object[]) {
