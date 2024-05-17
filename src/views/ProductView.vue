@@ -3,11 +3,13 @@ import { ref } from "vue";
 import { useRoute } from "vue-router"; // Import useRoute
 import { useProductsStore } from "@/stores/productsStore";
 import { Button } from "@/components/ui/button";
+import { useCartStore } from "@/stores/cartStore";
 const route = useRoute(); // Use useRoute to access route details
 const productsStore = useProductsStore();
 const product = ref(null);
 const loading = ref(false);
 const currentImage = ref(0);
+const cartStore = useCartStore();
 import { watchEffect } from "vue"; // Import watchEffect
 
 watchEffect(() => {
@@ -54,7 +56,11 @@ watchEffect(() => {
         <p class="text-muted-foreground">{{ product.description }}</p>
         <p>Quantity: {{ product.stock_quantity }}</p>
       </div>
-      <Button class="btn btn-primary md:max-w-64">Add to cart</Button>
+      <Button
+        class="btn btn-primary md:max-w-64"
+        @click="cartStore.addToCart(product)"
+        >Add to cart</Button
+      >
     </div>
   </div>
 </template>
