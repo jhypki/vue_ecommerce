@@ -34,7 +34,7 @@ watchEffect(() => {
         v-show="index === currentImage"
         :src="image"
         alt="product image"
-        class="h-96 object-cover rounded-md"
+        class="h-96 w-96 object-cover rounded-md"
       />
       <div class="flex gap-4">
         <img

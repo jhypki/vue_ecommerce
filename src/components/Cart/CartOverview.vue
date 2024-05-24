@@ -1,6 +1,7 @@
 <script setup>
 import { useCartStore } from "@/stores/cartStore";
 import { Button } from "@/components/ui/button";
+import { RouterLink } from "vue-router";
 const cartStore = useCartStore();
 </script>
 
@@ -18,7 +19,7 @@ const cartStore = useCartStore();
         v-for="product in cartStore.cart"
         class="flex gap-8 items-center"
       >
-        <img :src="product.image_urls[0]" class="h-16" />
+        <img :src="product.image_urls[0]" class="h-16 w-16 object-cover" />
         <div class="flex-1">{{ product.name }}</div>
         <div class="flex gap-0 flex-1">
           <Button @click="cartStore.decreaseProductQuantity(product)">-</Button>
@@ -41,7 +42,9 @@ const cartStore = useCartStore();
       >
         Total: ${{ cartStore.getTotalPrice() }}
       </p>
-      <Button>Go to checkout</Button>
+      <RouterLink to="/checkout">
+        <Button class="w-full">Go to checkout</Button>
+      </RouterLink>
     </div>
   </div>
 </template>

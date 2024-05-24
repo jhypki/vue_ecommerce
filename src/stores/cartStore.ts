@@ -1,66 +1,80 @@
 import { defineStore } from 'pinia';
 
+type CartItem = {
+    product_id: string;
+    quantity: number;
+    price: number;  // Added price here to avoid type issues
+};
+
+type CartState = {
+    cart: CartItem[];
+    cartQuantity: number;
+};
+
+type Product = {
+    product_id: string;
+    price: number;
+};
+
 export const useCartStore = defineStore({
     id: 'cart',
-    state: () => ({
-        cart: [] as object[],
+    state: (): CartState => ({
+        cart: [] as CartItem[],
         cartQuantity: 0
     }),
     actions: {
-        addToCart(product: object) {
-            
-            const existingProduct = this.cart.find((item) => item.product_id === product.product_id);
-            if(existingProduct) {
+        addToCart(product: Product) {
+            const existingProduct: CartItem | undefined = this.cart.find((item: CartItem) => item.product_id === product.product_id);
+            if (existingProduct) {
                 existingProduct.quantity++;
-            } else
-            {
-
+            } else {
                 this.cart.push({
                     ...product,
                     quantity: 1
-                    
                 });
             }
             this.cartQuantity++;
             this.saveState();
         },
-        removeFromCart(product: object) {
-            const currentProduct = this.cart.find((item) => item.product_id === product.product_id);
-            this.cartQuantity = this.cartQuantity - currentProduct.quantity;
-            this.cart = this.cart.filter((item) => item.product_id !== product.product_id);
-            this.saveState();
+        removeFromCart(product: { product_id: string }) {
+            const currentProduct = this.cart.find((item: CartItem) => item.product_id === product.product_id);
+            if (currentProduct) {
+                this.cartQuantity -= currentProduct.quantity;
+                this.cart = this.cart.filter((item: CartItem) => item.product_id !== product.product_id);
+                this.saveState();
+            }
         },
         clearCart() {
             this.cart = [];
             this.cartQuantity = 0;
             this.saveState();
         },
-        increaseProductQuantity(product: object) {
-            const existingProduct = this.cart.find((item) => item.product_id === product.product_id);
-            if(existingProduct) {
+        increaseProductQuantity(product: { product_id: string }) {
+            const existingProduct = this.cart.find((item: CartItem) => item.product_id === product.product_id);
+            if (existingProduct) {
                 existingProduct.quantity++;
                 this.cartQuantity++;
+                this.saveState();
             }
-            this.saveState();
         },
-        decreaseProductQuantity(product: object) {
-            const existingProduct = this.cart.find((item) => item.product_id === product.product_id);
-            if(existingProduct) {
+        decreaseProductQuantity(product: { product_id: string }) {
+            const existingProduct = this.cart.find((item: CartItem) => item.product_id === product.product_id);
+            if (existingProduct) {
                 existingProduct.quantity--;
                 this.cartQuantity--;
-                if(existingProduct.quantity <= 0) {
+                if (existingProduct.quantity <= 0) {
                     this.removeFromCart(product);
+                } else {
+                    this.saveState();
                 }
             }
-            this.saveState();
         },
-        getTotalPrice(){
+        getTotalPrice() {
             let total = 0;
-            this.cart.forEach((product) => {
+            this.cart.forEach((product: CartItem) => {
                 total += product.price * product.quantity;
-            
-            })
-            return Math.round(total * 100) / 100
+            });
+            return Math.round(total * 100) / 100;
         },
         saveState() {
             localStorage.setItem('cartStore', JSON.stringify(this.$state));
