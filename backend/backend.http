@@ -1,6 +1,34 @@
 @backend_HostAddress = http://localhost:5280
 
+### get all products
 GET {{backend_HostAddress}}/api/products/
 Accept: application/json
 
-###
+### get product by id
+GET {{backend_HostAddress}}/api/products/6651d00ff33d10a855bb7385
+Accept: application/json
+
+### create product
+POST {{backend_HostAddress}}/api/products/
+Content-Type: application/json
+
+{
+  "name": "Product 1",
+  "price": 100,
+  "description": "Product 1 description",
+  "category": "Category 1",
+  "stock_quantity": 10,
+  "image_urls": ["http://image1.jpg", "http://image2.jpg"]
+}
+
+### register user
+POST {{backend_HostAddress}}/api/auth/register
+Content-Type: application/json
+
+{
+    "password_hash": "password1",
+    "username": "user1",
+    "email": "user1@email.com",
+    "first_name": "User",
+    "last_name": "One"
+}
