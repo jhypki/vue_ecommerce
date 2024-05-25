@@ -1,8 +1,10 @@
 @backend_HostAddress = http://localhost:5280
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyMSIsImp0aSI6IjE5NWU1YWYxLTc3ZTgtNGNmNS04ZDlhLTE5NTg1MGFkMzc0ZSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiNjY1MWQ5NzI5MDM0YjViMGUyYjM1NWMwIiwiZXhwIjoxNzE2NjQyMzEyLCJpc3MiOiJTaG9wcGVyIiwiYXVkIjoiU2hvcHBlciJ9.ail4FBhju_ietWFs8K25VqmC9EUsF7DfGW-PqQaKjI8
 
 ### get all products
 GET {{backend_HostAddress}}/api/products/
 Accept: application/json
+
 
 ### get product by id
 GET {{backend_HostAddress}}/api/products/6651d00ff33d10a855bb7385
@@ -13,7 +15,7 @@ POST {{backend_HostAddress}}/api/products/
 Content-Type: application/json
 
 {
-  "name": "Product 1",
+  "name": "Product 3",
   "price": 100,
   "description": "Product 1 description",
   "category": "Category 1",
@@ -32,3 +34,17 @@ Content-Type: application/json
     "first_name": "User",
     "last_name": "One"
 }
+
+### login user
+POST {{backend_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+    "password": "password1",
+    "username": "user1"
+}
+
+### get all users
+GET {{backend_HostAddress}}/api/users/
+Accept: application/json
+Authorization: Bearer {{token}}

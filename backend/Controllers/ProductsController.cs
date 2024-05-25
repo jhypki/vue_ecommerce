@@ -1,6 +1,7 @@
 using ShopperBackend.Models;
 using ShopperBackend.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ShopperBackend.Controllers;
 
@@ -31,12 +32,14 @@ public class ProductsController : ControllerBase
         return Ok(product);
     }
     [HttpPost]
+    [Authorize]
     public async Task<ActionResult<Product>> CreateProduct(Product product)
     {
         await _productsService.CreateAsync(product);
         return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, product);
     }
     [HttpPut("{id:length(24)}")]
+    [Authorize]
     public async Task<IActionResult> UpdateProduct(string id, Product product)
     {
         var existingProduct = await _productsService.GetAsync(id);
@@ -48,6 +51,7 @@ public class ProductsController : ControllerBase
         return NoContent();
     }
     [HttpDelete("{id:length(24)}")]
+    [Authorize]
     public async Task<IActionResult> DeleteProduct(string id)
     {
         var existingProduct = await _productsService.GetAsync(id);

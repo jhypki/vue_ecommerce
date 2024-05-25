@@ -10,6 +10,7 @@ builder.Services.Configure<ShopperDatabaseSettings>(builder.Configuration.GetSec
 
 builder.Services.AddSingleton<ProductsService>();
 builder.Services.AddSingleton<AuthService>();
+builder.Services.AddSingleton<UsersService>();
 
 builder.Services.AddControllers();
 
