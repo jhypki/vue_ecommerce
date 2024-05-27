@@ -7,6 +7,10 @@ import { useProductsStore } from "./stores/productsStore";
 const { setUser } = useUserStore();
 const productsStore = useProductsStore();
 onMounted(async () => {
+  const response = await fetch("api/products");
+  const data = await response.json();
+  console.log(data);
+
   const {
     data: { user },
   } = await supabase.auth.getUser();
